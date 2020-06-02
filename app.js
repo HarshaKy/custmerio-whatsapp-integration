@@ -18,9 +18,9 @@ app.post('/message', (req, res) => {
 
     let messageBody
 
-    client.messages.list({limit: 2}).then((messages) => {
+    client.messages.list({limit: 1}).then((messages) => {
         messageBody = messages[0].body
-        messageFrom = messages[0].from
+        messageFrom = messages[0].from.replace('whatsapp:', '')
         
         if(!emailValidator.validate(messageBody)) {
             // console.log(messages[0])
@@ -30,16 +30,23 @@ app.post('/message', (req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/xml' })
             res.end(twiml.toString())
         } else {
+
             cio.identify(messageFrom, {
                 phone: messageFrom,
                 email: messageBody,
+                channel: 'WhatsApp',
+                plan: 'basic',
                 created_at: Math.floor( Date.now() / 1000 )
-            }).then(() => {
+            
+            })
+            .then(() => {
+                
                 console.log('trigger welcome event')
                 twiml.message(`trigger welcome event`)
 
                 res.writeHead(200, { 'Content-Type': 'text/xml' })
                 res.end(twiml.toString())
+            
             }, (e) => {
                 console.log(e)
             })
