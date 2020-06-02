@@ -1,0 +1,25 @@
+{
+  "name": "custmerio-whatsapp-integration",
+  "version": "1.0.0",
+  "description": "Introduction\r Prerequisites\r End Result\r Let’s start the setup-\r 1.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarshaKy/custmerio-whatsapp-integration.git"
+  },
+  "author": "harshaky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HarshaKy/custmerio-whatsapp-integration/issues"
+  },
+  "homepage": "https://github.com/HarshaKy/custmerio-whatsapp-integration#readme",
+  "dependencies": {
+    "customerio-node": "^0.7.0",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "twilio": "^3.44.0"
+  }
+}
