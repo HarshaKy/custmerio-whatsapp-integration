@@ -41,7 +41,6 @@ app.post('/message', (req, res) => {
         messageFrom = messages[0].from.replace('whatsapp:', '')
         
         if(!emailValidator.validate(messageBody)) {
-            // console.log(messages[0])
 
             twiml.message(`Hello ${messageFrom}. Enter email to register`)
 
@@ -59,7 +58,6 @@ app.post('/message', (req, res) => {
             })
             .then(() => {
                 
-                console.log('trigger welcome event')
                 twiml.message(`Awaiting confirmation...`)
 
                 res.writeHead(200, { 'Content-Type': 'text/xml' })
