@@ -16,25 +16,12 @@ const app = express()
 
 app.use(bodyParser.json())
 
-app.post('/message', (req, res) => {
+// route to register through whatsapp
+app.post('/fromWhatsapp', (req, res) => {
     
     const twiml = new MessagingResponse()
 
     let messageBody
-
-    if (req.body.message) {
-        console.log(req.body.phone)
-        
-        client.messages
-            .create({
-                from: 'whatsapp:+14155238886',
-                body: req.body.message,
-                to: `whatsapp:${req.body.phone}`
-            })
-            .then(message => console.log(message.sid))
-        
-        res.send('ok').status(200)
-    }
 
     client.messages.list({limit: 1}).then((messages) => {
         messageBody = messages[0].body
@@ -68,9 +55,60 @@ app.post('/message', (req, res) => {
             })
         }   
     })
-    
-    
 })
+
+// route to send welcome message from customerio to whatsapp
+app.post('/welcomeMessage', (req, res) => {
+
+    if (req.body.message) {
+        console.log(req.body.phone)
+        
+        client.messages
+            .create({
+                from: 'whatsapp:+14155238886',
+                body: req.body.message,
+                to: `whatsapp:${req.body.phone}`
+            })
+            .then(message => console.log(message.sid))
+        
+        res.send('ok').status(200)
+    }
+})
+
+app.post('/broadcast', (req, res) => {
+    if (req.body.message) {
+        console.log(req.body.phone)
+        
+        client.messages
+            .create({
+                from: 'whatsapp:+14155238886',
+                body: req.body.message,
+                to: `whatsapp:${req.body.phone}`
+            })
+            .then(message => console.log(message.sid))
+        
+        res.send('ok').status(200)
+    }
+})
+
+app.post('/whatsappNewsletter', (req, res) => {
+    
+    if (req.body.news) {
+        
+        client.messages
+            .create({
+                from: 'whatsapp:+14155238886',
+                body: req.body.news,
+                to: `whatsapp:${req.body.phone}`
+            })
+            .then(message => console.log(message.sid))
+    
+        res.send('ok').status(200)
+    }
+
+})
+
+
 
 app.listen(3000, () => {
     console.log('Listening on port 3000')
