@@ -2,6 +2,7 @@ const CIO = require('customerio-node')
 const express = require('express')
 const twilio = require('twilio')
 const emailValidator = require('email-validator')
+const bodyParser = require('body-parser')
 
 const { MessagingResponse } = require('twilio').twiml
 const { siteId } = require('./keys')
@@ -13,10 +14,27 @@ const cio = new CIO(siteId, apiKey)
 const client = require('twilio')(accountSid, authToken);
 const app = express()
 
+app.use(bodyParser.json())
+
 app.post('/message', (req, res) => {
+    
     const twiml = new MessagingResponse()
 
     let messageBody
+
+    if (req.body.message) {
+        console.log(req.body.phone)
+        
+        client.messages
+            .create({
+                from: 'whatsapp:+14155238886',
+                body: req.body.message,
+                to: `whatsapp:${req.body.phone}`
+            })
+            .then(message => console.log(message.sid))
+        
+        res.send('ok').status(200)
+    }
 
     client.messages.list({limit: 1}).then((messages) => {
         messageBody = messages[0].body
@@ -42,7 +60,7 @@ app.post('/message', (req, res) => {
             .then(() => {
                 
                 console.log('trigger welcome event')
-                twiml.message(`trigger welcome event`)
+                twiml.message(`Awaiting confirmation...`)
 
                 res.writeHead(200, { 'Content-Type': 'text/xml' })
                 res.end(twiml.toString())
@@ -52,6 +70,8 @@ app.post('/message', (req, res) => {
             })
         }   
     })
+    
+    
 })
 
 app.listen(3000, () => {
