@@ -105,3 +105,6 @@ dist
 
 # keys
 keys.js
+
+# phone numbers
+phoneNumbers.js
