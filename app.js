@@ -59,13 +59,13 @@ app.post('/orderConfirmation', (req, res) => {
 
 })
 
-cio.track('+918971677453', {
-    name: 'Purchase',
-    data: {
-        price: '3000',
-        product: 'Headphones'
-    }
-})
+// cio.track('+918971677453', {
+//     name: 'Purchase',
+//     data: {
+//         price: '3000',
+//         product: 'Car'
+//     }
+// })
 
 
 app.listen(3000, () => {
