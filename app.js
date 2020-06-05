@@ -51,6 +51,21 @@ app.post('/whatsappNewsletter', (req, res) => {
 
 })
 
+app.post('/orderConfirmation', (req, res) => {
+    
+    handleCustomerioMessage(req)
+
+    res.send('ok').status(200)
+
+})
+
+cio.track('+918971677453', {
+    name: 'Purchase',
+    data: {
+        price: '3000',
+        product: 'Headphones'
+    }
+})
 
 
 app.listen(3000, () => {
